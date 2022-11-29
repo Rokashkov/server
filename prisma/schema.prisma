@@ -1,0 +1,34 @@
+generator client {
+  	provider = "prisma-client-js"
+}
+
+datasource db {
+  	provider = "postgresql"
+  	url      = env("DATABASE_URL")
+}
+
+model Article {
+	id        		Int     		@id @default(autoincrement())
+	title     		String			@default("title")
+	description		String			@default("description")
+	keywords		String[]		@default(["keyword"])
+	content   		Json[]			@default(["{\"tag\": \"p\", \"text\": \"paragraph\"}"])
+	views			Int				@default(0)
+	createdAt		DateTime		@default(now())
+	updatedAt		DateTime		@updatedAt
+}
+
+model Meta {
+	id        		Int     		@id @default(autoincrement())
+	name			String			@unique
+	title     		String			@default("title")
+	description		String			@default("description")
+	keywords		String[]		@default(["keyword"])
+}
+
+model User {
+	id        		Int     		@id @default(autoincrement())
+	name			String			@unique
+	password     	String
+	token			String			@default("")
+}
